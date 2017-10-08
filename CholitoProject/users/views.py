@@ -3,10 +3,16 @@ from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
+
 from .models import *
 
 
-# Create your views here.
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+    def get(self, request, **kwargs):
+        return render(request, self.template_name)
+
 
 class LogInView(TemplateView):
     template_name = 'login.html'
@@ -14,9 +20,9 @@ class LogInView(TemplateView):
     def get(self, request, **kwargs):
         return render(request, self.template_name)
 
+
 # TODO: redirect to correct template
 class AuthView(View):
-
     def post(self, request, **kwargs):
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -36,4 +42,3 @@ class AuthView(View):
 
         # TODO: deleted user
         return redirect('/')
-
