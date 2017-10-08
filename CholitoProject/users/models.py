@@ -1,13 +1,8 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
 
-UserTypes = (
-    (0, 'admin'),
-    (1, 'natural')
-)
+# Create your models here.
+class NaturalUser(User):
+	pass
 
-
-class AnUser(models.Model):
-    user = models.OneToOneField(User)
-    username = models.CharField(max_length=200)
-    user_type = models.IntegerField(default=1, choices=UserTypes)
+	
