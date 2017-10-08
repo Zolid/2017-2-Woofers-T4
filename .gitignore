@@ -187,3 +187,6 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # End of https://www.gitignore.io/api/osx,python,django,virtualenv,sublimetext
+
+# PyCharm
+.idea/
