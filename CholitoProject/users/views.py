@@ -4,8 +4,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from .models import *
-
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -30,15 +28,11 @@ class AuthView(View):
 
         # TODO: error logging in
         if user is None:
-            return redirect('/')
+            return redirect('/login')
 
         if user.is_active:
             auth.login(request, user)
-            the_user = AnUser.objects.get(usuario=user)
-            user_type = the_user.user_type
-            # TODO: user types
-            if user_type == 1:  # natural person
-                return redirect('/')
+            return redirect('/')
 
         # TODO: deleted user
-        return redirect('/')
+        return redirect('/login')

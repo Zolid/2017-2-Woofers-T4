@@ -54,14 +54,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
-                <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href={% url 'login' %}>Ingresar</a>
-                        </li>
-                    </ul>
-                </div>
+                {% if user.is_authenticated %}
+                    <h2>LOGGED IN</h2>
+                {% else %}
+                    <!-- Navbar Right Menu -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href={% url 'login' %}>Ingresar</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
             </nav>
         </header>
         <!-- Left side column. contains the logo and sidebar -->
