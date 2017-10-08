@@ -40,7 +40,8 @@
             Ingresa tu email y contraseña para ingresar.
         </p>
 
-        <form action="" method="post">
+        <form action="{% url 'auth' %}" method="post">
+            {% csrf_token %}
             <div class="form-group has-feedback">
                 <input type="email" class="form-control" placeholder="Email">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
