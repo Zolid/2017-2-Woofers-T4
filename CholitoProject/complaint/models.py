@@ -19,8 +19,8 @@ class Complaint(models.Model):
     COMPLAINT_STATUS = (
         (1, "Enviado"),
         (2, "En Gestión"),
-        (2, "Resuleta"),
-        (2, "Erronea"),
+        (3, "Resuleta"),
+        (4, "Erronea"),
     )
 
     GENDER_OPTIONS = (
