@@ -30,6 +30,7 @@ gestión por parte de las municipalidades de estas y resolver el cuidado de los 
 |   |   |-- urls.py
 |   |   `-- views.py
 |   |-- manage.py
+|	|-- media
 |   |-- municipality
 |   |   |-- admin.py
 |   |   |-- apps.py
@@ -38,6 +39,7 @@ gestión por parte de las municipalidades de estas y resolver el cuidado de los 
 |   |   |-- tests.py
 |   |   |-- urls.py
 |   |   `-- views.py
+|	|-- static
 |   |-- templates
 |   `-- users
 |       |-- admin.py
@@ -59,7 +61,9 @@ Ademas se generan app's (animales, complaint, municipality, etc.) en sus carpeta
 * views.py : Archivo que contiene la lógica de respuestas a las peticiones.
 * models.py : Archivo que contiene las clases que representan los objetos que el ORM de django mappeara y guardara en la base de datos.
 
-Los estáticos del projecto estarán en la carpeta ```statics```
+Los estáticos del projecto estarán en la carpeta ```static```
+
+Los archivos de carga/descarga del projecto estarán en la carpeta ```media```
 ## Requisitos del proyecto
 Para la correcta ejecución de este proyecto se requiere python 3 y pip. 
 
