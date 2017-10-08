@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'animals',
     'complaint',
     'municipality',
-    'users'
+    'users',
+    'ong',
 ]
 
 MIDDLEWARE = [
