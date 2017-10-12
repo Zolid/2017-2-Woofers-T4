@@ -17,10 +17,13 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from CholitoProject import settings
+from CholitoProject.views import AuthView, LogOutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('users.urls')),
+    url(r'^auth/', AuthView.as_view(), name='auth'),
+    url(r'^logout/', LogOutView.as_view(), name='logout'),
+    url(r'^', include('naturalUser.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
