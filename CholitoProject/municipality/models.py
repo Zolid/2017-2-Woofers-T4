@@ -12,5 +12,6 @@ class Municipality(models.Model):
     directions = models.TextField(max_length=200, null=True)
 
 
-class MunicipalityUser(User):
+class MunicipalityUser(models.Model):
+    user = models.OneToOneField(User)
     municipality = models.ForeignKey('Municipality')
