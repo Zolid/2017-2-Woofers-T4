@@ -6,6 +6,11 @@
 </head>
 <body>
 <h1>Formulario de denuncia</h1>
-{{ form.as_p }}
+<form method="POST" action="{% url 'make-complaint' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Agregar"/>
+</form>
+
 </body>
 </html>

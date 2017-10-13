@@ -21,6 +21,7 @@ from CholitoProject import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('users.urls')),
+    url(r'^denuncia/', include('complaint.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

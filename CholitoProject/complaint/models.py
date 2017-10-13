@@ -4,9 +4,11 @@ from django.db import models
 class AnimalType(models.Model):
     name = models.TextField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Complaint(models.Model):
-
     COMPLAINT_OPTIONS = (
         (1, "Abandono en la calle"),
         (2, "Exposición a temperaturas extremas"),
@@ -24,8 +26,8 @@ class Complaint(models.Model):
     )
 
     GENDER_OPTIONS = (
-        ("Male", 1),
-        ("Female", 2),
+        (1, "Male"),
+        (2, "Female"),
     )
 
     description = models.TextField(max_length=1000)
@@ -36,8 +38,10 @@ class Complaint(models.Model):
     status = models.SmallIntegerField(choices=COMPLAINT_STATUS)
     animal_type = models.ForeignKey(AnimalType)
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
+    wounded = models.BooleanField()
+    color = models.TextField(max_length=50)
 
 
-class ComplaintImages(models.Model):
+class ComplaintImage(models.Model):
     image = models.ImageField(upload_to='complaints/')
     complaint = models.ForeignKey('Complaint', on_delete=models.CASCADE)
