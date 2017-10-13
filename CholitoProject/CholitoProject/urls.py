@@ -21,6 +21,7 @@ from CholitoProject.views import AuthView, LogOutView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^complaint/', include('complaint.urls')),
     url(r'^auth/', AuthView.as_view(), name='auth'),
     url(r'^logout/', LogOutView.as_view(), name='logout'),
     url(r'^', include('naturalUser.urls')),
