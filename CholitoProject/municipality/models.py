@@ -13,6 +13,7 @@ class Municipality(models.Model):
         return self.name
 
 
+# TODO: Add profile image field
 class MunicipalityUser(models.Model):
     user = models.OneToOneField(User)
     municipality = models.ForeignKey('Municipality')

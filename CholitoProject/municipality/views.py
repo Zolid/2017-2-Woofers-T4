@@ -18,4 +18,5 @@ class IndexView(View):
         if check_permissions(request, user):
             self.context['municipality_user'] = user
             return render(request, self.template_name, context=self.context)
+        # TODO: redirect to correct index
         return redirect("/")
