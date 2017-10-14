@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^complaint/', include('complaint.urls')),
     url(r'^auth/', AuthView.as_view(), name='auth'),
     url(r'^logout/', LogOutView.as_view(), name='logout'),
+    url(r'^municipality/', include('municipality.urls')),
     url(r'^', include('naturalUser.urls')),
 ]
 
