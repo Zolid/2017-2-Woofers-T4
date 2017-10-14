@@ -41,6 +41,9 @@ class Complaint(models.Model):
     wounded = models.BooleanField()
     color = models.TextField(max_length=50)
 
+    def __str__(self):
+        return "Complaint #" + str(self.pk)
+
 
 class ComplaintImage(models.Model):
     image = models.ImageField(upload_to='complaints/')
