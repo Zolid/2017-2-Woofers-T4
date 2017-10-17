@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from animals import models
 
 # Register your models here.

@@ -15,7 +15,6 @@ def is_adopt_selected(request, adopt_users):
     return natural_user in adopt_users
 
 
-
 class AnimalRenderView(View):
     template_name = 'view_animal.html'
     context = {}
