@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Denuncia #{{ complaint.pk }}</title>
+</head>
+<body>
+
+<h2>Denuncia #{{ complaint.pk }}</h2>
+<h3>Estado: {{ complaint.status }}</h3>
+
+<p>Tipo de denuncia: {{ complaint.case }}</p>
+<p>Tipo de animal: {{ complaint.animal_type }}</p>
+<p>Color: {{ complaint.color }}</p>
+<p>Direccion: {{ complaint.directions }}</p>
+<p>Sexo: {{ complaint.gender }}</p>
+<p>¿Herido?:
+    {% if complaint.wounded == True %}
+        Si
+    {% else %}
+        No
+    {% endif %}
+</p>
+<p>Comentario: {{ complaint.description }}</p>
+
+<p>Y aqui mapa con las coordenadas</p>
+</body>
+</html>
