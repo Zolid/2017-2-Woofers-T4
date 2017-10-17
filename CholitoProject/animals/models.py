@@ -1,6 +1,7 @@
 from django.db import models
 
 from complaint.models import Complaint, AnimalType
+from naturalUser.models import NaturalUser
 
 
 class AnimalImage(models.Model):
@@ -26,3 +27,9 @@ class Animal(models.Model):
     # TODO: for now
     def __str__(self):
         return self.name + " - " + self.animal_type.name
+
+
+class Adopt(models.Model):
+    user = models.ForeignKey(NaturalUser)
+    animal = models.ForeignKey(Animal)
+    sent = models.DateTimeField(auto_now_add=True)
