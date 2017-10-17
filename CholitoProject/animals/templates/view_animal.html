@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ animal.name }}</title>
+</head>
+<body>
+<h2>{{ animal.name }}</h2>
+<p>Genero: {{ animal.get_gender_display }}</p>
+<p>Tipo de animal: {{ animal.animal_type }}</p>
+<p>Edad estimada: {{ animal.estimated_age }} años</p>
+<p>Dias en adopcion: {{ animal.days_in_adoption }}</p>
+<p>Color: {{ animal.color }}</p>
+<p>Descripcion: {{ animal.description }}</p>
+
+
+{% if adopt_selected %}
+    You have selected to adopt this animal
+{% else %}
+    <!-- TODO: JS for user to adopt -->
+    Adopt!
+{% endif %}
+
+{% if adopters %}
+    <p>These users have adopted this animal</p>
+    {% for user in adopters %}
+        <p>{{ user.user.username }}</p>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
