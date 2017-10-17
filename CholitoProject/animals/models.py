@@ -22,3 +22,7 @@ class Animal(models.Model):
     color = models.TextField(max_length=50)
     estimated_age = models.PositiveSmallIntegerField()
     days_in_adoption = models.IntegerField()
+
+    # TODO: for now
+    def __str__(self):
+        return self.name + " - " + self.animal_type.name
