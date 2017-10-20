@@ -22,7 +22,7 @@ class LogInView(TemplateView):
 
 
 class SignUpView(View):
-    form = SignUpForm({'username' : 'dummy'})
+    form = SignUpForm({'username': 'dummy'})
     context = {'form': form}
     template_name = 'sign_up.html'
 
