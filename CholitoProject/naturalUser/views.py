@@ -22,21 +22,23 @@ class LogInView(TemplateView):
 
 
 class SignUpView(View):
-    form = SignUpForm()
+    form = SignUpForm({'username' : 'dummy'})
     context = {'form': form}
-    template_name = ''
+    template_name = 'sign_up.html'
 
     def get(self, request, **kwargs):
         return render(request, self.template_name, context=self.context)
 
     def post(self, request, **kwargs):
         user_form = SignUpForm(request.POST)
+        print(user_form)
         if user_form.is_valid():
             user = user_form.save()
             user.refresh_from_db()
             natural_user = NaturalUser.objects.create(user=user)
-            username = user_form.cleaned_data.get('username')
+            username = user_form.cleaned_data.get('email')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return natural_user.get_index()
+        return render(request, self.template_name, context=self.context)

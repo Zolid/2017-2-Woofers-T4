@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrate!</title>
+</head>
+<body>
+<h2>Ingresa tus datos para registrarte en la pagina!</h2>
+<form method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+    {{ form.username.as_hidden }}
+    <p>Email:<br>
+        {{ form.email }}
+    </p>
+    <p>Contraseña:<br>
+        {{ form.password1 }}
+    </p>
+    <p>Confirma tu contraseña:<br>
+        {{ form.password2 }}
+    </p>
+    <input type="submit" value="Enviar"/>
+</form>
+</body>
+</html>
