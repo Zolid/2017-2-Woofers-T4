@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 {% block body %}
 
+
 <body class="hold-transition skin-blue sidebar-mini">
 <h1>Subir Denuncia</h1>
 <form method="POST" action="{% url 'make-complaint' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p>Tipo de Maltrato: {{ form.case }}</p>
+    <br>
+    <p>Tipo de Animal: {{ form.animal_type }} </p>
+    <br>
+    <p>Sexo: {{ form.gender }}</p>
+    <br>
+    <p>Color: {{ form.color }}</p>
+    <br>
+    <p>Herido: {{ form.wounded }} </p>
+    <br>
+    <p>Comentario: {{form.description}}</p>
+    {{ form.directions }}
+    {{ form.lat }}
+    {{ form.lang }}
+    <br>
     <input type="submit" class = "btn btn-primary" value="Agregar"/>
-    <input type="button" class = "btn btn-default" href="{% url 'user-index' %}" value ="Cancelar"/>
+    <input type="button" class = "btn btn-default" value ="Cancelar"/>
 </form>
 
 </body>
