@@ -1,5 +1,7 @@
 from django.db import models
 
+from municipality.models import Municipality
+
 
 class AnimalType(models.Model):
     name = models.TextField(max_length=100)
@@ -40,6 +42,8 @@ class Complaint(models.Model):
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
     wounded = models.BooleanField()
     color = models.TextField(max_length=50)
+    # TODO: wait for db update
+    #municipality = models.ForeignKey(Municipality)
 
     def __str__(self):
         return "Complaint #" + str(self.pk)
