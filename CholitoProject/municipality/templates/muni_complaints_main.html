@@ -75,7 +75,7 @@
                 <!-- TODO: use JS to get statistics, ONG and complaints -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="toggle">
+                    <li>
                         <!-- TODO: complaint list that matches municipality -->
                         <a href="#">
                             <i class="fa fa-bullhorn"></i>
@@ -133,7 +133,7 @@
                     </thead>
                     <tbody>
                     {% for complaint in complaints %}
-                        <tr>
+                        <tr class="clickable-row" data-href="{% url 'see-complaint' complaint.pk %}">
                             <th>{{ complaint.get_case_display }}</th>
                             <th>{{ complaint.animal_type }}</th>
                             <th>{{ complaint.directions }}</th>
@@ -188,6 +188,13 @@
     </div>
     <!-- ./modal -->
 
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 
     </body>
 {% endblock %}

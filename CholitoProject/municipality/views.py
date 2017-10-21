@@ -17,7 +17,7 @@ class IndexView(View):
     def get(self, request, pk, **kwargs):
         user = MunicipalityUser.objects.get(id=pk)
 
-        self.context['complaints'] = Complaint.objects.all() # .filter(municipality=user.municipality)
+        self.context['complaints'] = Complaint.objects.all()  # .filter(municipality=user.municipality)
 
         if check_permissions(request, user):
             self.context['municipality_user'] = user
