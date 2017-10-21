@@ -17,6 +17,14 @@ class ComplaintForm(forms.ModelForm):
             'lng',
             'description',
         )
+        widgets = {
+            'gender': forms.RadioSelect(),
+            'wounded': forms.RadioSelect(),
+            'lat': forms.HiddenInput(),
+            'lng': forms.HiddenInput(),
+            'directions': forms.HiddenInput()
+
+        }
 
     def __init__(self, *args, **kwargs):
         super(ComplaintForm, self).__init__(*args, **kwargs)
