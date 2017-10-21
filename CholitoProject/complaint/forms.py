@@ -18,11 +18,13 @@ class ComplaintForm(forms.ModelForm):
             'description',
         )
         widgets = {
+            'color': forms.TextInput(attrs={'id':"example-text-input"}),
             'gender': forms.RadioSelect(),
             'wounded': forms.RadioSelect(),
             'lat': forms.HiddenInput(),
             'lng': forms.HiddenInput(),
-            'directions': forms.HiddenInput()
+            'directions': forms.HiddenInput(),
+            'description': forms.TextInput(attrs={'rows':'2'})
 
         }
 
