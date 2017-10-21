@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import redirect
-from django.contrib.auth.models import User
 
 
 class NaturalUser(models.Model):
@@ -11,6 +11,9 @@ class NaturalUser(models.Model):
         super(NaturalUser, self).save(*args, **kwargs)
         self.user.email = self.user.username
         self.user.save()
+
+    def __str__(self):
+        return "Natural user " + self.user.username
 
     def get_index(self):
         return redirect('user-index')
