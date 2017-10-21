@@ -26,8 +26,13 @@ class Complaint(models.Model):
     )
 
     GENDER_OPTIONS = (
-        (1, "Male"),
-        (2, "Female"),
+        (1, "Macho"),
+        (2, "Hembra"),
+    )
+
+    WOUND_OPTIONS = (
+        (True, "Si"),
+        (False, "No"),
     )
 
     description = models.TextField(max_length=1000)
@@ -38,7 +43,7 @@ class Complaint(models.Model):
     status = models.SmallIntegerField(choices=COMPLAINT_STATUS)
     animal_type = models.ForeignKey(AnimalType)
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
-    wounded = models.BooleanField()
+    wounded = models.BooleanField(choices = WOUND_OPTIONS)
     color = models.TextField(max_length=50)
 
     def __str__(self):
