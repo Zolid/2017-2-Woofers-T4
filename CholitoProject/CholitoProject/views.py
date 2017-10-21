@@ -13,9 +13,8 @@ def home(request):
 class AuthView(View):
 
     def post(self, request, **kwargs):
-        username = request.POST.get('username')
+        username = request.POST.get('email')
         password = request.POST.get('password')
-        print()
         user = authenticate(username=username, password=password)
 
         if user is not None:

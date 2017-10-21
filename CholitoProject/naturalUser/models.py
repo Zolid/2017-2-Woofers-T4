@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db import models
-from django.shortcuts import redirect
+from django.shortcuts import render
 
 
 class NaturalUser(models.Model):
@@ -9,11 +9,13 @@ class NaturalUser(models.Model):
 
     def save(self, *args, **kwargs):
         super(NaturalUser, self).save(*args, **kwargs)
-        self.user.email = self.user.username
+        if not self.user.has_perm('natural_user_access'):
+            permission = Permission.objects.get(codename='natural_user_access')
+            self.user.user_permissions.add(permission)
         self.user.save()
 
     def __str__(self):
         return "Natural user " + self.user.username
 
-    def get_index(self):
-        return redirect('user-index')
+    def get_index(self, request, context=None):
+        return render(request, "login.html", context=context)
