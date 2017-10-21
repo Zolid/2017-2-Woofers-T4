@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Denuncia!</title>
-</head>
-<body>
-<h1>Formulario de denuncia</h1>
+{% extends "base.html" %}
+{% block body %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<h1>Subir Denuncia</h1>
 <form method="POST" action="{% url 'make-complaint' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Agregar"/>
+    <input type="submit" class = "btn btn-primary" value="Agregar"/>
+    <input type="button" class = "btn btn-default" href="{% url 'user-index' %}" value ="Cancelar"/>
 </form>
 
 </body>
-</html>
+{% endblock %}
