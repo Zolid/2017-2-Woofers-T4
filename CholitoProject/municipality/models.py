@@ -8,12 +8,12 @@ class Municipality(models.Model):
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     lng = models.DecimalField(max_digits=9, decimal_places=6)
     directions = models.TextField(max_length=200, null=True)
+    avatar = models.ImageField(upload_to='municipality/avatar/')
 
     def __str__(self):
         return self.name
 
 
-# TODO: Add profile image field
 class MunicipalityUser(models.Model):
     user = models.OneToOneField(User)
     municipality = models.ForeignKey('Municipality')
@@ -23,3 +23,8 @@ class MunicipalityUser(models.Model):
 
     def get_index(self):
         return redirect('municipality-index', pk=self.pk)
+
+    def save(self, *args, **kwargs):
+        super(MunicipalityUser, self).save(*args, **kwargs)
+        self.user.email = self.user.username
+        self.user.save()
