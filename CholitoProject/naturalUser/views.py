@@ -13,7 +13,6 @@ class IndexView(TemplateView):
 
     def get(self, request, **kwargs):
         c_user = get_user_index(request.user)
-        print(c_user)
         return render(request, self.template_name, context={"c_user": c_user})
 
 
