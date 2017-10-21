@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
-from CholitoProject.userManager import get_user_index
 
+from CholitoProject.userManager import get_user_index
 from naturalUser.forms import SignUpForm
 from naturalUser.models import NaturalUser
 
@@ -44,3 +44,17 @@ class SignUpView(View):
             login(request, user)
             return natural_user.get_index()
         return render(request, self.template_name, context=self.context)
+
+
+class OngInViewTemplate(TemplateView):
+    template_name = 'usuario-in-ong.html'
+
+    def get(self, request, **kwargs):
+        return render(request, self.template_name)
+
+
+class OngOutViewTemplate(TemplateView):
+    template_name = 'usuario-out-ong.html'
+
+    def get(self, request, **kwargs):
+        return render(request, self.template_name)
