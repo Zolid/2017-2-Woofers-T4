@@ -26,18 +26,19 @@
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <!-- TODO: ADD PROFILE PICTURE TO MUNICIPALITIES-->
-                                <img src="{{ municipality_user.municipality.avatar.url }}" class="user-image" alt="User Image">
+
+                                <img src="{{ municipality_user.municipality.avatar.url }}" class="user-image"
+                                     alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{{ municipality_user.municipality.name }}</span>
+                                <span class="hidden-xs">M. de {{ municipality_user.municipality.name }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <!-- TODO: ADD PROFILE PICTURE TO MUNICIPALITIES-->
-                                    <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
-                                    <img src="{{ municipality_user.municipality.avatar.url }}" class="img-circle" alt="User Image">
-                                    <p>{{ municipality_user.municipality.name }}</p>
+
+                                    <img src="{{ municipality_user.municipality.avatar.url }}" class="img-circle"
+                                         alt="User Image">
+                                    <p>Municipalidad de<br>{{ municipality_user.municipality.name }}</p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
@@ -64,12 +65,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <!-- TODO: ADD PROFILE PICTURE TO MUNICIPALITIES-->
-                        <img src="dist/img/muni-santiago-160x160.png" class="img-circle" alt="User Image">
+
+                        <img src="{{ municipality_user.municipality.avatar.url }}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <!-- TODO: Maybe set short name / long name in model?-->
-                        <p>{{ municipality_user.municipality.name }}</p>
+                        <p>M. de {{ municipality_user.municipality.name }}</p>
                     </div>
                 </div>
                 <!-- TODO: use JS to get statistics, ONG and complaints -->
@@ -116,41 +116,33 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    ONG
+                    Denuncias
                 </h1>
             </section>
             <!-- Main content -->
             <section class="content container-fluid">
-                <div class="row">
-                    <!-- /.col -->
-                    <p>The ONG goes here</p>
-                    <div class="col-lg-4 col-sm-6">
-                        <!-- Widget: user widget style 1 -->
-                        <div class="box box-widget widget-user">
-                            <!-- Add the bg color to the header using any of the bg-* classes -->
-                            <div class="widget-user-header bg-purple-active">
-                                <h3 class="widget-user-username">Fundación EDRA</h3>
-                                <h5 class="widget-user-desc">
-                                    <i class="fa fa-star c-star"></i>
-                                    182
-                                </h5>
-                            </div>
-                            <div class="widget-user-image">
-                                <img class="img-circle" src="dist/img/ong-edra.png" alt="User Avatar">
-                            </div>
-                            <div class="c-box__footer">
-                                <!--muni-estadisticas-ongs-ong.html>-->
-                                <a href="#" type="button" class="btn btn-primary">
-                                    <i class="fa fa-bar-chart"></i>
-                                    Ver Estadísticas
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /.widget-user -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Tipo Denuncia</th>
+                        <th>Animal</th>
+                        <th>Dirección</th>
+                        <th>Herido</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for complaint in complaints %}
+                        <tr>
+                            <th>{{ complaint.get_case_display }}</th>
+                            <th>{{ complaint.animal_type }}</th>
+                            <th>{{ complaint.directions }}</th>
+                            <th>{{ complaint.wounded }}</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
 
             </section>
             <!-- /.content -->
@@ -179,7 +171,8 @@
                         <div class="form-group">
                             <label for="exampleInputFile">Imagen de perfil</label>
                             <br>
-                            <img src="{{ municipality_user.municipality.avatar.url }}" class="user-image" alt="User Image"
+                            <img src="{{ municipality_user.municipality.avatar.url }}" class="user-image"
+                                 alt="User Image"
                                  width="150">
                             <br><br>
                             <input type="file" id="exampleInputFile">
@@ -195,17 +188,6 @@
     </div>
     <!-- ./modal -->
 
-    <!-- REQUIRED JS SCRIPTS -->
 
-    <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-    Both of these plugins are recommended to enhance the
-    user experience. -->
     </body>
 {% endblock %}
