@@ -11,6 +11,7 @@ def get_user_or_none(model, user):
         the_user = None
     return the_user
 
+
 def get_user_index(user):
     original_user = get_user_or_none(NaturalUser, user)
     if original_user is not None:

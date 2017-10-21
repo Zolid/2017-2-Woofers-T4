@@ -21,6 +21,9 @@
                     <span class="sr-only">Toggle navigation</span>
                 </a>
                 {% if user.is_authenticated %}
+                <img src={{ c_user.avatar.url }}>
+                <h3>{{ user.username }}</h3>
+
                     <h2>LOGGED IN</h2>
                     <a href={% url 'logout' %}>Salir</a>
                 {% else %}
