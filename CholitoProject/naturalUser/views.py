@@ -58,7 +58,7 @@ class SignUpView(View):
             return natural_user.get_index(request)
 
         messages.error(request,
-                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.")
+                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.ru")
 
         return render(request, self.template_name, context=self.context)
 
