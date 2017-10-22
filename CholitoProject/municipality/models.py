@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Permission
 from django.db import models
-from django.shortcuts import render
+from django.shortcuts import redirect
 
 
 class Municipality(models.Model):
@@ -22,7 +22,7 @@ class MunicipalityUser(models.Model):
         return self.municipality.name + " User"
 
     def get_index(self, request, context):
-        return render(request, 'muni_complaints_main.html', context=context)
+        return redirect('/municipality/')
 
     def save(self, *args, **kwargs):
         super(MunicipalityUser, self).save(*args, **kwargs)
