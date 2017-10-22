@@ -11,8 +11,8 @@ class AnimalImage(models.Model):
 
 class Animal(models.Model):
     GENDER_OPTIONS = (
-        (1, "Male"),
-        (2, "Female"),
+        (1, "Macho"),
+        (2, "Hembra"),
     )
 
     name = models.TextField(max_length=100)
