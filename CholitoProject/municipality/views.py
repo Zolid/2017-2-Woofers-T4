@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from municipality.models import MunicipalityUser
 
 
@@ -9,7 +9,8 @@ def check_permissions(request, request_profile):
     return actual_user == request_profile
 
 
-class IndexView(View):
+class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
+    permission_required = 'municipality.municipal_user_access'
     template_name = 'muni-estadisticas-ongs.html'
     context = {}
 
