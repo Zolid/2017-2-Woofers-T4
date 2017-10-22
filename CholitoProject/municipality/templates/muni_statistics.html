@@ -1,0 +1,58 @@
+{% extends "Municipality/municipality-standard.html" %}
+{% block title %}Estatisticas{% endblock %}
+
+{% block content-header %}Estadisticas de Denuncias{% endblock %}
+
+{% block content %}
+
+    <script src="http://d3plus.org/js/d3.js"></script>
+    <script src="http://d3plus.org/js/d3plus.js"></script>
+
+
+    <div id="viz"></div>
+
+    <script>
+        var data = [
+            {
+                "Denuncias": 150, "name": "Perros",
+                "Reportadas": 50, "Consolidadas": 20,
+                "Verificadas": 130, "Cerradas": 10, "Desechadas": 20
+            },
+            {
+                "Denuncias": 110, "name": "Gatos",
+                "Reportadas": 40, "Consolidadas": 40,
+                "Verificadas": 100, "Cerradas": 35, "Desechadas": 5
+            },
+            {
+                "Denuncias": 60, "name": "Aves",
+                "Reportadas": 20, "Consolidadas": 2,
+                "Verificadas": 45, "Cerradas": 15, "Desechadas": 10
+            },
+            {
+                "Denuncias": 20, "name": "Caballos",
+                "Reportadas": 5, "Consolidadas": 1,
+                "Verificadas": 15, "Cerradas": 4, "Desechadas": 2
+            },
+            {
+                "Denuncias": 40, "name": "Otros",
+                "Reportadas": 10, "Consolidadas": 10,
+                "Verificadas": 40, "Cerradas": 5, "Desechadas": 4
+            },
+        ]
+        d3plus.viz()
+            .container("#viz")
+            .data(data)
+            .type("pie")
+            .id("name")
+            .size("Denuncias")
+            .ui([
+                {
+                    "method": "size",
+                    "value": ["Denuncias", "Reportadas", "Consolidadas", "Verificadas", "Cerradas"]
+
+                }
+
+            ])
+            .draw()
+    </script>
+{% endblock %}
