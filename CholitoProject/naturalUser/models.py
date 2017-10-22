@@ -2,6 +2,8 @@ from django.contrib.auth.models import User, Permission
 from django.db import models
 from django.shortcuts import render
 
+from complaint.models import AnimalType
+
 
 class NaturalUser(models.Model):
     user = models.OneToOneField(User)
@@ -18,4 +20,4 @@ class NaturalUser(models.Model):
         return "Natural user " + self.user.username
 
     def get_index(self, request, context=None):
-        return render(request, "index.html", context=context)
+        return render(request, 'index.html', context)

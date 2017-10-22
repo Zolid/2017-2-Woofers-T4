@@ -22,7 +22,6 @@ class AnimalRenderView(View):
         self.context['selected_animal'] = animal
         self.context['adopters'] = adopt_users
         self.context['images'] = AnimalImage.objects.filter(animal=animal)
-        print(self.context)
         return render(request, self.template_name, context=self.context)
 
 

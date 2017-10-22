@@ -16,6 +16,7 @@ class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
     context = {}
 
     def get(self, request, **kwargs):
-        # .filter(municipality=user.municipality)
-        self.context['complaints'] = Complaint.objects.all()
+        user = get_user_index(request.user)
+        self.context['complaints'] = Complaint.objects.filter(municipality=user.municipality)
+        self.context['c_user'] = user
         return render(request, self.template_name, context=self.context)
