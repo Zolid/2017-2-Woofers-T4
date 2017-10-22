@@ -22,7 +22,7 @@ class AuthView(View):
             print(current_user)
             if current_user is not None:
                 login(request, user)
-                return current_user.get_index()
+                return current_user.get_index(request)
 
         messages.error(request,
                        "La combinación de usuario y contraseña no coincide")

@@ -13,7 +13,7 @@ class IndexView(TemplateView):
 
     def get(self, request, **kwargs):
         c_user = get_user_index(request.user)
-        if c_user == None:
+        if c_user is None:
             return render(request, 'index.html')
         return c_user.get_index(request, {"c_user": c_user})
 
@@ -36,6 +36,7 @@ class SignUpView(View):
     def post(self, request, **kwargs):
         user_form = SignUpForm(request.POST)
         print(user_form)
+        print(user_form.is_valid())
         if user_form.is_valid():
             user = user_form.save()
             user.refresh_from_db()
@@ -44,7 +45,7 @@ class SignUpView(View):
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return natural_user.get_index()
+            return natural_user.get_index(request)
         return render(request, self.template_name, context=self.context)
 
 
