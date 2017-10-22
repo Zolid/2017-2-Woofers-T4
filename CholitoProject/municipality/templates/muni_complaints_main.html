@@ -1,190 +1,30 @@
-{% extends "base.html" %}
-{% block body %}
-    <body class="hold-transition skin-blue sidebar-mini">
+{% extends "Municipality/municipality-standard.html" %}
+{% block title %}Denuncias{% endblock %}
 
-    <div class="wrapper">
-        <!-- Main Header -->
-        <header class="main-header">
-            <!-- Logo -->
-            <a href="#" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>CH</b></span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Cholito</b></span>
-            </a>
+{% block content-header %}Denuncias{% endblock %}
 
-            <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                </a>
-                <!-- Navbar Right Menu -->
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <!-- User Account Menu -->
-                        <li class="dropdown user user-menu">
-                            <!-- Menu Toggle Button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+{% block content %}
 
-                                <img src="{{ c_user.municipality.avatar.url }}" class="user-image"
-                                     alt="User Image">
-                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{{ c_user.municipality.name }}</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <!-- The user image in the menu -->
-                                <li class="user-header">
-                                    <img src="{{ c_user.municipality.avatar.url }}" class="img-circle" alt="User Image">
-                                    <p>{{ c_user.municipality.name }}</p>
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <button type="button" class="btn btn-default btn-flat" data-toggle="modal"
-                                                data-target="#myModal">
-                                            Perfil
-                                        </button>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="{% url 'logout' %}" class="btn btn-default btn-flat">Salir</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-
-                        <img src="{{ c_user.municipality.avatar.url }}" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-
-                        <p>M. de {{ c_user.municipality.name }}</p>
-                    </div>
-                </div>
-                <!-- TODO: use JS to get statistics, ONG and complaints -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <!-- Optionally, you can add icons to the links -->
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-bullhorn"></i>
-                            <span>Denuncias</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-bar-chart"></i>
-                            <span>Estadísticas</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i>
-                                    Denuncias
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"> <!--"muni-estadisticas-ongs.html">-->
-                                    <i class="fa fa-circle-o"></i>
-                                    ONG
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    Denuncias
-                </h1>
-            </section>
-            <!-- Main content -->
-            <section class="content container-fluid">
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Tipo Denuncia</th>
-                        <th>Animal</th>
-                        <th>Dirección</th>
-                        <th>Herido</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for complaint in complaints %}
-                        <tr class="clickable-row" data-href="{% url 'see-complaint' complaint.pk %}">
-                            <th>{{ complaint.get_case_display }}</th>
-                            <th>{{ complaint.animal_type }}</th>
-                            <th>{{ complaint.directions }}</th>
-                            <th>{{ complaint.wounded }}</th>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
-
-            </section>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-
-    </div>
-    <!-- ./wrapper -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Perfil</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Nombre</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   value="{{ c_user.municipality.name }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Imagen de perfil</label>
-                            <br>
-                            <img src="{{ c_user.municipality.avatar.url }}" class="user-image"
-                                 alt="User Image"
-                                 width="150">
-                            <br><br>
-                            <input type="file" id="exampleInputFile">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ./modal -->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Tipo Denuncia</th>
+            <th>Animal</th>
+            <th>Dirección</th>
+            <th>Herido</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for complaint in complaints %}
+            <tr class="clickable-row" data-href="{% url 'see-complaint' complaint.pk %}">
+                <th>{{ complaint.get_case_display }}</th>
+                <th>{{ complaint.animal_type }}</th>
+                <th>{{ complaint.directions }}</th>
+                <th>{{ complaint.get_wounded_display }}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     <script>
         jQuery(document).ready(function ($) {
@@ -194,5 +34,4 @@
         });
     </script>
 
-    </body>
 {% endblock %}
