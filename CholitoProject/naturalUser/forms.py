@@ -4,9 +4,15 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField(max_length=200)
-    first_name = forms.CharField(widget=forms.TextInput())
-    last_name = forms.CharField(widget=forms.TextInput())
+    username = forms.CharField(widget=forms.HiddenInput())
+    email = forms.EmailField(max_length=200,
+                             widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Email"}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nombre"}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Apellido"}))
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': "form-control", 'placeholder': "Contraseña"}))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': "form-control", 'placeholder': "Confirma tu contraseña"}))
 
     class Meta:
         model = User
@@ -15,6 +21,8 @@ class SignUpForm(UserCreationForm):
             'email',
             'first_name',
             'last_name',
+            'password1',
+            'password2',
         )
 
     def save(self, commit=True):
@@ -29,4 +37,5 @@ class SignUpForm(UserCreationForm):
 
 
 class AvatarForm(forms.Form):
-    avatar = forms.ImageField()
+    avatar = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': "form-control", 'placeholder': "Selecciona una imagen de perfil"}))
