@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+    <body class="hold-transition skin-blue sidebar-mini">
+
+    <div class="wrapper">
+
+        {% block header %}
+        {% endblock %}
+        {% block sidebar %}
+        {% endblock %}
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    {% block content-header %}{% endblock %}
+                </h1>
+            </section>
+            <section class="content container-fluid">
+                {% block content %}
+                {% endblock %}
+            </section>
+        </div>
+    </div>
+
+    {% block control %}
+    {% endblock %}
+
+    {% block modal %}
+    {% endblock %}
+
+    </body>
+{% endblock %}

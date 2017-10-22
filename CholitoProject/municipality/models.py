@@ -26,7 +26,7 @@ class MunicipalityUser(models.Model):
 
     def save(self, *args, **kwargs):
         super(MunicipalityUser, self).save(*args, **kwargs)
-        if not self.user.has_perm('municipal_usser_access'):
+        if not self.user.has_perm('municipal_user_access'):
             permission = Permission.objects.get(
                 codename='municipal_user_access')
             self.user.user_permissions.add(permission)
