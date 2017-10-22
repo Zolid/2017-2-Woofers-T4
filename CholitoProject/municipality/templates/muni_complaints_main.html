@@ -30,13 +30,13 @@
                                 <img src="{{ c_user.municipality.avatar.url }}" class="user-image"
                                      alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">M. de {{ c_user.municipality.name }}</span>
+                                <span class="hidden-xs">{{ c_user.municipality.name }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
                                     <img src="{{ c_user.municipality.avatar.url }}" class="img-circle" alt="User Image">
-                                    <p>Municipalidad de<br>{{ c_user.municipality.name }}</p>
+                                    <p>{{ c_user.municipality.name }}</p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">

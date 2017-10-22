@@ -19,10 +19,9 @@ class AuthView(View):
 
         if user is not None:
             current_user = get_user_index(user)
-            print("pass")
             if current_user is not None:
                 login(request, user)
-                return current_user.get_index(request)
+                return redirect('/')
 
         messages.error(request,
                        "La combinación de usuario y contraseña no coincide")
