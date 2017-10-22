@@ -5,17 +5,22 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from CholitoProject.userManager import get_user_index
-from naturalUser.forms import SignUpForm
+from complaint.models import AnimalType
+from naturalUser.forms import SignUpForm, AvatarForm
 from naturalUser.models import NaturalUser
 
 
 class IndexView(TemplateView):
+    context = {}
 
     def get(self, request, **kwargs):
         c_user = get_user_index(request.user)
+        self.context['c_user'] = c_user
+        animals = AnimalType.objects.all()
         if c_user is None:
-            return render(request, 'index.html')
-        return c_user.get_index(request, {"c_user": c_user})
+            return render(request, 'index.html', {'animals': animals})
+        self.context['animals'] = animals
+        return c_user.get_index(request, self.context)
 
 
 class LogInView(TemplateView):
@@ -26,21 +31,21 @@ class LogInView(TemplateView):
 
 
 class SignUpView(View):
-    form = SignUpForm({'username': 'dummy'})
-    context = {'form': form}
+    user_form = SignUpForm(initial={'username': 'dummy'}, prefix='user')
+    avatar_form = AvatarForm(prefix='avatar')
+    context = {'user_form': user_form, 'avatar_form': avatar_form}
     template_name = 'sign_up.html'
 
     def get(self, request, **kwargs):
         return render(request, self.template_name, context=self.context)
 
     def post(self, request, **kwargs):
-        user_form = SignUpForm(request.POST)
-        print(user_form)
-        print(user_form.is_valid())
-        if user_form.is_valid():
-            user = user_form.save()
-            user.refresh_from_db()
-            natural_user = NaturalUser.objects.create(user=user)
+        user_form = SignUpForm(request.POST, prefix='user')
+        avatar_form = AvatarForm(request.POST, request.FILES, prefix='avatar')
+        if user_form.is_valid() and avatar_form.is_valid():
+            user_ = user_form.save()
+            user_.refresh_from_db()
+            natural_user = NaturalUser.objects.create(user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
             username = user_form.cleaned_data.get('email')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)

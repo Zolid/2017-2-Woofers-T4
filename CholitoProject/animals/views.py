@@ -22,6 +22,7 @@ class AnimalRenderView(View):
         self.context['selected_animal'] = animal
         self.context['adopters'] = adopt_users
         self.context['images'] = AnimalImage.objects.filter(animal=animal)
+        print(self.context)
         return render(request, self.template_name, context=self.context)
 
 
@@ -32,7 +33,7 @@ class AdoptView(View):
         Adopt.objects.get_or_create(user=c_user, animal=animal)
 
         adopt_users_pk = Adopt.objects.filter(animal=animal).values('user')
-        adopt_users = ["<p>" + user.user.username + "</p>" for user in
+        adopt_users = ["<p>" + user.user.first_name + " " + user.user.last_name + "</p>" for user in
                        NaturalUser.objects.filter(pk__in=adopt_users_pk)]
 
         return HttpResponse(adopt_users)
