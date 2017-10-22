@@ -22,12 +22,12 @@ class MunicipalityUser(models.Model):
         return self.municipality.name + " User"
 
     def get_index(self, request, context):
-        return render(request, 'muni-estadisticas-ongs.html', context=context)
+        return render(request, 'muni_complaints_main.html', context=context)
 
     def save(self, *args, **kwargs):
         super(MunicipalityUser, self).save(*args, **kwargs)
-        if not self.user.has_perm('municipal_usser_access'):
+        if not self.user.has_perm('municipality_user_access'):
             permission = Permission.objects.get(
-                codename='municipal_user_access')
+                codename='municipality_user_access')
             self.user.user_permissions.add(permission)
         self.user.save()
