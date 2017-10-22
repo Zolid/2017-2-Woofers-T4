@@ -47,8 +47,7 @@ class Complaint(models.Model):
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
     wounded = models.BooleanField(choices = WOUND_OPTIONS)
     color = models.TextField(max_length=50)
-    # TODO: wait for db update
-    #municipality = models.ForeignKey(Municipality)
+    municipality = models.ForeignKey(Municipality)
 
     def __str__(self):
         return "Complaint #" + str(self.pk)

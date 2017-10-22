@@ -6,10 +6,8 @@ from complaint.models import Complaint
 from municipality.models import MunicipalityUser
 from CholitoProject.userManager import get_user_index
 
-
-def check_permissions(request, request_profile):
-    actual_user = MunicipalityUser.objects.get(user=request.user)
-    return actual_user == request_profile
+from CholitoProject.userManager import get_user_index
+from complaint.models import Complaint
 
 
 class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
@@ -20,5 +18,4 @@ class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
     def get(self, request, **kwargs):
         # .filter(municipality=user.municipality)
         self.context['complaints'] = Complaint.objects.all()
-        self.context['c_user'] = get_user_index(request.user)
         return render(request, self.template_name, context=self.context)

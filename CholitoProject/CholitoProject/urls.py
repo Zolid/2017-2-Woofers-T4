@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^logout/', LogOutView.as_view(), name='logout'),
     url(r'^municipality/', include('municipality.urls')),
     url(r'^animal/', include('animals.urls')),
-    url(r'^', include('naturalUser.urls')),
+    url(r'', include('naturalUser.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
