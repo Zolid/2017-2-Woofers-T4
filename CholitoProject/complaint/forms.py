@@ -17,6 +17,18 @@ class ComplaintForm(forms.ModelForm):
             'lng',
             'description',
         )
+        widgets = {
+            'case': forms.Select(attrs ={'id':'case-input'}),
+            'animal_type': forms.Select(attrs={'id':'animal_type-input'}),
+            'color': forms.TextInput(attrs={'id':'color-input'}),
+            'gender': forms.RadioSelect(attrs={'id':"gender-input"}),
+            'wounded': forms.RadioSelect(attrs={'id':'wounded-input'}),
+            'lat': forms.HiddenInput(),
+            'lng': forms.HiddenInput(),
+            'directions': forms.HiddenInput(),
+            'description': forms.TextInput(attrs={'id':'description-input'})
+
+        }
 
     def __init__(self, *args, **kwargs):
         super(ComplaintForm, self).__init__(*args, **kwargs)

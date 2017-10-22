@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-
 from naturalUser.models import NaturalUser
 from municipality.models import MunicipalityUser
 
@@ -7,7 +5,7 @@ from municipality.models import MunicipalityUser
 def get_user_or_none(model, user):
     try:
         the_user = model.objects.get(user=user)
-    except ObjectDoesNotExist:
+    except Exception:
         the_user = None
     return the_user
 

@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db import models
-from django.shortcuts import redirect
+from django.shortcuts import render
 
 
 class Municipality(models.Model):
@@ -21,10 +21,13 @@ class MunicipalityUser(models.Model):
     def __str__(self):
         return self.municipality.name + " User"
 
-    def get_index(self):
-        return redirect('municipality-index', pk=self.pk)
+    def get_index(self, request, context):
+        return render(request, 'muni-estadisticas-ongs.html', context=context)
 
     def save(self, *args, **kwargs):
         super(MunicipalityUser, self).save(*args, **kwargs)
-        self.user.email = self.user.username
+        if not self.user.has_perm('municipal_usser_access'):
+            permission = Permission.objects.get(
+                codename='municipal_user_access')
+            self.user.user_permissions.add(permission)
         self.user.save()

@@ -5,12 +5,16 @@ from django.contrib.auth.models import User
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=200)
+    # avatar = forms.ImageField()
 
     class Meta:
         model = User
         fields = (
             'username',
-            'email'
+            'email',
+            # 'first_name',
+            # 'last_name',
+            # 'avatar'
         )
 
     def save(self, commit=True):

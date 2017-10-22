@@ -1,6 +1,6 @@
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from django.http import Http404
+from django.contrib import messages
 from CholitoProject.userManager import get_user_index
 from django.shortcuts import redirect
 
@@ -13,7 +13,7 @@ def home(request):
 class AuthView(View):
 
     def post(self, request, **kwargs):
-        username = request.POST.get('username')
+        username = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
 
@@ -22,10 +22,11 @@ class AuthView(View):
             print(current_user)
             if current_user is not None:
                 login(request, user)
-                return current_user.get_index()
+                return current_user.get_index(request)
 
-        # TODO: no user
-        raise Http404("No user found")
+        messages.error(request,
+                       "La combinación de usuario y contraseña no coincide")
+        return redirect('/login/')
 
 
 class LogOutView(View):
