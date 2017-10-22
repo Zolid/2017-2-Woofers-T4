@@ -3,26 +3,59 @@
 
 
 <body class="hold-transition skin-blue sidebar-mini">
-<h1>Subir Denuncia</h1>
-<form method="POST" action="{% url 'make-complaint' %}">
+
+<form  method="POST" action="{% url 'make-complaint' %}" >
+	<h1>Subir Denuncia</h1>
     {% csrf_token %}
-    <p>Tipo de Maltrato: {{ form.case }}</p>
-    <br>
-    <p>Tipo de Animal: {{ form.animal_type }} </p>
-    <br>
-    <p>Sexo: {{ form.gender }}</p>
-    <br>
-    <p>Color: {{ form.color }}</p>
-    <br>
-    <p>Herido: {{ form.wounded }} </p>
-    <br>
-    <p>Comentario: {{form.description}}</p>
-    {{ form.directions }}
-    {{ form.lat }}
-    {{ form.lang }}
-    <br>
-    <input type="submit" class = "btn btn-primary" value="Agregar"/>
-    <input type="button" class = "btn btn-default" value ="Cancelar"/>
+    <div class="form-group">    	
+    	<label class="control-label col-sm-2" for="case-input"> Tipo de maltrato:</label>
+    	<div class="col-sm-10">
+    		{{ form.case }}
+    	</div>
+    </div>
+    <div class="form-group">    	
+    	<label class="control-label col-sm-2" for="animal_type-input">Tipo de animal</label>
+    	<div class="col-sm-10">
+        	{{ form.animal_type }}
+        </div>
+    </div>
+	<div class="form-check form-check-inline">    	
+		<label class="control-label col-sm-2" for="gender-input">Sexo:</label>
+		<div class="col-sm-offset-2 col-sm-10">
+        	{{ form.gender }}
+        </div>
+    </div>
+    <div class="form-group">    	
+    	<label class="control-label col-sm-2" for="color-input">Color:</label>
+    	<div class="col-sm-10">
+        	{{ form.color }}
+        </div>
+    </div>
+    <div class="form-group">    	
+    	<label class="control-label col-sm-2" for="wounded-input">Herido:</label>
+    	<div class="col-sm-offset-2 col-sm-10">
+        	{{ form.wounded }}
+        </div>
+    </div>
+    <div class="form-group">    	
+    	<label class="control-label col-sm-2" for="wounded-input">Comentario:</label>
+    	<div class="col-sm-10">
+        	{{ form.description }}
+        </div>
+    </div>
+
+	    {{ form.directions }}
+	    {{ form.lat }}
+	    {{ form.lang }}
+	<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    	<br>
+
+    	<input type="submit" class = "btn btn-primary" value="Envia denuncia"/>
+    	<input type="button" class = "btn btn-default" value ="Cancelar"/>
+    </div>
+    </div>
+
 </form>
 
 </body>
