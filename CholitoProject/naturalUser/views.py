@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render
@@ -55,6 +56,10 @@ class SignUpView(View):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return natural_user.get_index(request)
+
+        messages.error(request,
+                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.")
+
         return render(request, self.template_name, context=self.context)
 
 
