@@ -51,7 +51,6 @@ class SignUpView(View):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return natural_user.get_index(request)
-        print("not")
         return render(request, self.template_name, context=self.context)
 
 

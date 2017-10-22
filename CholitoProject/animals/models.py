@@ -6,7 +6,7 @@ from naturalUser.models import NaturalUser
 
 class AnimalImage(models.Model):
     image = models.ImageField(upload_to='animals/')
-    complaint = models.ForeignKey('Animal', on_delete=models.CASCADE)
+    animal = models.ForeignKey('Animal', on_delete=models.CASCADE)
 
 
 class Animal(models.Model):
