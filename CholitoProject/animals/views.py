@@ -1,8 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from CholitoProject.userManager import get_user_index
-from animals.models import Animal, Adopt
+from animals.models import Animal, Adopt, AnimalImage
 from complaint.models import AnimalType
 from naturalUser.models import NaturalUser
 
@@ -20,5 +21,18 @@ class AnimalRenderView(View):
         adopt_users = list(NaturalUser.objects.filter(pk__in=adopt_users_pk))
         self.context['selected_animal'] = animal
         self.context['adopters'] = adopt_users
-        self.context['adopt_selected'] = c_user in adopt_users
+        self.context['images'] = AnimalImage.objects.filter(animal=animal)
         return render(request, self.template_name, context=self.context)
+
+
+class AdoptView(View):
+    def get(self, request, **kwargs):
+        c_user = get_user_index(request.user)
+        animal = get_object_or_404(Animal, pk=request.GET.get('id'))
+        Adopt.objects.get_or_create(user=c_user, animal=animal)
+
+        adopt_users_pk = Adopt.objects.filter(animal=animal).values('user')
+        adopt_users = ["<p>" + user.user.username + "</p>" for user in
+                       NaturalUser.objects.filter(pk__in=adopt_users_pk)]
+
+        return HttpResponse(adopt_users)
