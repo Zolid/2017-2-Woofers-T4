@@ -21,7 +21,7 @@ class ComplaintForm(forms.ModelForm):
             'case': forms.Select(attrs ={'id':'case-input'}),
             'animal_type': forms.Select(attrs={'id':'animal_type-input'}),
             'color': forms.TextInput(attrs={'id':'color-input'}),
-            'gender': forms.RadioSelect(attrs={'id':"gender-input"}),
+            'gender': forms.RadioSelect(attrs={'id':"gender-input", 'display': 'inline-block'}),
             'wounded': forms.RadioSelect(attrs={'id':'wounded-input'}),
             'lat': forms.HiddenInput(),
             'lng': forms.HiddenInput(),
@@ -33,3 +33,7 @@ class ComplaintForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ComplaintForm, self).__init__(*args, **kwargs)
         self.fields['animal_type'] = forms.ModelChoiceField(queryset=AnimalType.objects)
+
+class ImageForm(forms.Form):
+    complaint_image = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': "form-control", 'placeholder': "Agrega una imagen de tu denuncia"}))
