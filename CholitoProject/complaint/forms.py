@@ -18,13 +18,15 @@ class ComplaintForm(forms.ModelForm):
             'description',
         )
         widgets = {
-            'color': forms.TextInput(attrs={'id':"example-text-input"}),
-            'gender': forms.RadioSelect(),
-            'wounded': forms.RadioSelect(),
+            'case': forms.Select(attrs ={'id':'case-input'}),
+            'animal_type': forms.Select(attrs={'id':'animal_type-input'}),
+            'color': forms.TextInput(attrs={'id':'color-input'}),
+            'gender': forms.RadioSelect(attrs={'id':"gender-input"}),
+            'wounded': forms.RadioSelect(attrs={'id':'wounded-input'}),
             'lat': forms.HiddenInput(),
             'lng': forms.HiddenInput(),
             'directions': forms.HiddenInput(),
-            'description': forms.TextInput(attrs={'rows':'2'})
+            'description': forms.TextInput(attrs={'id':'description-input'})
 
         }
 
