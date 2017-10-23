@@ -8,7 +8,8 @@ from complaint.models import Complaint, ComplaintImage, AnimalType
 
 
 class ComplaintView(View):
-    form = ComplaintForm(initial={'lat': 20, 'lng':20, 'directions': "beauchef"}, prefix='complaint')
+    form = ComplaintForm(
+        initial={'lat': 20, 'lng': 20, 'directions': "beauchef"}, prefix='complaint')
     image_form = ImageForm(prefix='image')
     animals = AnimalType.objects.all()
     context = {'form': form, 'image_form': image_form, 'animals': animals}
@@ -20,8 +21,7 @@ class ComplaintView(View):
         return render(request, self.template_name, context=self.context)
 
 
-class ComplaintSendView(PermissionRequiredMixin, LoginRequiredMixin, View):
-    permission_required = 'naturalUser.natural_user_access'
+class ComplaintSendView(View):
 
     def post(self, request, **kwargs):
         form = ComplaintForm(request.POST, prefix='complaint')
@@ -31,7 +31,8 @@ class ComplaintSendView(PermissionRequiredMixin, LoginRequiredMixin, View):
             complaint.status = 1
             complaint.save()
             if image_form.is_valid():
-                ComplaintImage.objects.create(complaint=complaint, image=image_form.cleaned_data.get('complaint_image'))
+                ComplaintImage.objects.create(
+                    complaint=complaint, image=image_form.cleaned_data.get('complaint_image'))
 
         return redirect('/')
 
@@ -52,11 +53,11 @@ class ComplaintRenderView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
         return render(request, self.template_name, context=self.context)
 
+
 class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
     template_name = 'view_complaint.html'
     permission_required = 'municipality.municipality_user_access'
     context = {}
-
 
     def post(self, request, pk, **kwargs):
         complaint = get_object_or_404(Complaint, pk=pk)
@@ -69,9 +70,3 @@ class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
         self.context['images'] = images
 
         return render(request, self.template_name, context=self.context)
-
-
-
-
-
-
