@@ -58,9 +58,9 @@ class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
     context = {}
 
 
-    def post(self, request, **kwargs):
-        complaint = get_object_or_404(Complaint, pk=request.id-complaint)
-        complaint.status = request.status
+    def post(self, request, pk, **kwargs):
+        complaint = get_object_or_404(Complaint, pk=pk)
+        complaint.status = request.POST['status']
         complaint.save()
 
         self.context['complaint'] = complaint
