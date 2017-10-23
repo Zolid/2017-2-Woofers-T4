@@ -1,8 +1,12 @@
 {% extends "User/user-standard.html" %}
-{% block content %}
 
+{% block title %}Denuncia{% endblock %}
+
+{% block content-header %}Subir Denuncia{% endblock %}
+
+{% block content %}
     <form method="POST" enctype="multipart/form-data" action="{% url 'make-complaint' %}">
-        <h1>Subir Denuncia</h1>
+
         {% csrf_token %}
         <div class="form-group">
             <label class="control-label col-sm-10" for="case-input">Tipo de maltrato:</label>
