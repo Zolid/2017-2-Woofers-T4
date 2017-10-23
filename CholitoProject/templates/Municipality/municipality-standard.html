@@ -16,11 +16,10 @@
                         <p>M. de {{ c_user.municipality.name }}</p>
                     </div>
                 </div>
-                <!-- TODO: use JS to get statistics, ONG and complaints -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <!-- Optionally, you can add icons to the links -->
                     <li>
-                        <a href="#">
+                        <a href="{% url 'municipality-index' %}">
                             <i class="fa fa-bullhorn"></i>
                             <span>Denuncias</span>
                         </a>
@@ -35,13 +34,13 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="#">
+                                <a href="{% url 'complaint-statistics' %}">
                                     <i class="fa fa-circle-o"></i>
                                     Denuncias
                                 </a>
                             </li>
                             <li>
-                                <a href="#"> <!--"muni-estadisticas-ongs.html">-->
+                                <a href="#">
                                     <i class="fa fa-circle-o"></i>
                                     ONG
                                 </a>
