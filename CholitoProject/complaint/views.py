@@ -68,5 +68,5 @@ class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
 
         images = ComplaintImage.objects.filter(complaint=complaint)
         self.context['images'] = images
-
-        return render(request, self.template_name, context=self.context)
+        # render(request, self.template_name, context=self.context)
+        return redirect('see-complaint', pk=pk)

@@ -3,77 +3,72 @@
 
 {% block title %}Denuncia #{{ complaint.pk }}{% endblock %}
 
-{% block content %}    
+{% block content %}
     <h2 align="center">Denuncia #{{ complaint.pk }}</h2>
     <table class="table table-responsive">
-    <tr>
-        <th>Tipo de Denuncia:</th>
-        <td>{{ complaint.get_case_display }}</td>
-        <th>Tipo de Animal:</th>
-        <td> {{ complaint.animal_type }}</td>
-        <th>Color:</th>
-        <td>{{ complaint.color }}</td>
-    </tr>
-    <tr>
-        <th>Direccion:</th>
-        <td>{{ complaint.directions }}</td>
-        <th>Sexo: </th>
-        <td>{{ complaint.get_gender_display }}</td>
-        <th>¿Herido?:</th>
-        <td>{{ complaint.get_wounded_display }}</td>
-    </tr>
-    <tr>
-        <th>Comentario:</th>
-        <td colspan="5">{{ complaint.description }}</td>
-    </tr>
+        <tr>
+            <th>Tipo de Denuncia:</th>
+            <td>{{ complaint.get_case_display }}</td>
+            <th>Tipo de Animal:</th>
+            <td> {{ complaint.animal_type }}</td>
+            <th>Color:</th>
+            <td>{{ complaint.color }}</td>
+        </tr>
+        <tr>
+            <th>Direccion:</th>
+            <td>{{ complaint.directions }}</td>
+            <th>Sexo:</th>
+            <td>{{ complaint.get_gender_display }}</td>
+            <th>¿Herido?:</th>
+            <td>{{ complaint.get_wounded_display }}</td>
+        </tr>
+        <tr>
+            <th>Comentario:</th>
+            <td colspan="5">{{ complaint.description }}</td>
+        </tr>
     </table>
-    <div height="200px">
-    <img src="{% static 'images/comp.png' %}" style="max-height: 350px;" class="img-fluid center-block">
-    </div>
-
-
     {% if images %}
-    <!-- slider -->
-    <div class="row">
-        <div class="col-md-9" id="slider">
-            <!-- Top part of the slider -->
-            <div class="row">
-                <div class="col-md-3" id="carousel-bounding-box">
-                    <div id="myCarousel" class="carousel slide">
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
+        <!-- slider -->
+        <div class="row">
+            <div class="col-md-9" id="slider">
+                <!-- Top part of the slider -->
+                <div class="row">
+                    <div class="col-md-3" id="carousel-bounding-box">
+                        <div id="myCarousel" class="carousel slide">
+                            <!-- Carousel items -->
+                            <div class="carousel-inner">
 
-                            {% for image in images %}
+                                {% for image in images %}
 
-                                <div class="item"
-                                        {% if forloop.counter0 == 0 %}
-                                     id="slide0"
-                                        {% endif %}
-                                     data-slide-number="{{ forloop.counter0 }}">
-                                    <img class="img-rounded img-responsive" src="{{ image.image.url }}">
-                                </div>
+                                    <div class="item"
+                                            {% if forloop.counter0 == 0 %}
+                                         id="slide0"
+                                            {% endif %}
+                                         data-slide-number="{{ forloop.counter0 }}">
+                                        <img class="img-rounded img-responsive" src="{{ image.image.url }}">
+                                    </div>
 
-                            {% endfor %}
+                                {% endfor %}
 
-                        </div><!--/carousel-inner-->
-                    </div><!--/carousel-->
-                    <ul class="carousel-controls-mini list-inline text-center">
-                        <li><a href="#myCarousel" data-slide="prev">‹</a></li>
-                        <li><a href="#myCarousel" data-slide="next">›</a></li>
-                    </ul><!--/carousel-controls-->
-                </div><!--/col-->
-                <div class="col-md-4" id="carousel-text"></div>
+                            </div><!--/carousel-inner-->
+                        </div><!--/carousel-->
+                        <ul class="carousel-controls-mini list-inline text-center">
+                            <li><a href="#myCarousel" data-slide="prev">‹</a></li>
+                            <li><a href="#myCarousel" data-slide="next">›</a></li>
+                        </ul><!--/carousel-controls-->
+                    </div><!--/col-->
+                    <div class="col-md-4" id="carousel-text"></div>
 
-            </div><!--/row-->
-        </div><!--/col-->
-    </div><!--/row slider-->
+                </div><!--/row-->
+            </div><!--/col-->
+        </div><!--/row slider-->
 
-    
-    <script>
-        $(document).ready(function () {
-            jQuery("#slide0").addClass("active");
-        });
-    </script>
+
+        <script>
+            $(document).ready(function () {
+                jQuery("#slide0").addClass("active");
+            });
+        </script>
 
     {% endif %}
 
@@ -81,20 +76,20 @@
         <h3>Estado: <font color="#428bca"> {{ complaint.get_status_display }}</font></h3>
 
         <form method="POST" enctype="multipart/form-data" action="{% url 'act-complaint' complaint.pk %}">
-        {% csrf_token %}
+            {% csrf_token %}
 
-        <input type="hidden" name="id-complaint" id="id-complaint" value="{{complaint.pk}}"/>
-        <select class="btn btn-default btn-lg" id="status" name="status">
-          <option value="1">Reportada</option>
-          <option value="2">Consolidada</option>
-          <option value="3">Verificada</option>
-          <option value="4">Cerrada</option>
-          <option value="5">Desechada</option>
-        </select> 
+            <input type="hidden" name="id-complaint" id="id-complaint" value="{{ complaint.pk }}"/>
+            <select class="btn btn-default btn-lg" id="status" name="status">
+                <option value="1">Reportada</option>
+                <option value="2">Consolidada</option>
+                <option value="3">Verificada</option>
+                <option value="4">Cerrada</option>
+                <option value="5">Desechada</option>
+            </select>
 
-        <button type="submit" class="btn btn-primary btn-lg">Actualizar Estado</button>
+            <button type="submit" class="btn btn-primary btn-lg">Actualizar Estado</button>
         </form>
-    
+
 
     </div>
 
