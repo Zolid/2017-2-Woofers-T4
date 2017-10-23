@@ -36,8 +36,9 @@ class ComplaintSendView(PermissionRequiredMixin, LoginRequiredMixin, View):
         return redirect('/')
 
 
-class ComplaintRenderView(View):
+class ComplaintRenderView(PermissionRequiredMixin, LoginRequiredMixin, View):
     template_name = 'view_complaint.html'
+    permission_required = 'municipality.municipality_user_access'
     context = {}
 
     def get(self, request, pk, **kwargs):
@@ -50,3 +51,27 @@ class ComplaintRenderView(View):
         self.context['images'] = images
 
         return render(request, self.template_name, context=self.context)
+
+class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
+    template_name = 'view_complaint.html'
+    permission_required = 'municipality.municipality_user_access'
+    context = {}
+
+
+    def post(self, request, pk, **kwargs):
+        complaint = get_object_or_404(Complaint, pk=pk)
+        complaint.status = request.POST['status']
+        complaint.save()
+
+        self.context['complaint'] = complaint
+
+        images = ComplaintImage.objects.filter(complaint=complaint)
+        self.context['images'] = images
+
+        return render(request, self.template_name, context=self.context)
+
+
+
+
+
+
