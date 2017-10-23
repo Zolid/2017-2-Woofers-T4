@@ -11,11 +11,27 @@ class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
     template_name = 'muni_complaints_main.html'
     context = {}
 
+    def getComplaintStats(self, complaints):
+        stats_complaint = {}
+        status_parser = dict(Complaint().COMPLAINT_STATUS)
+
+        for key, value in status_parser.items():
+            stats_complaint[value] = 0
+
+        for complaint in list(complaints):
+            temp_status = status_parser.get(complaint.status)
+            stats_complaint[temp_status] += 1
+
+        return stats_complaint
+
     def get(self, request, **kwargs):
         user = get_user_index(request.user)
-        self.context['complaints'] = Complaint.objects.filter(
+        complaints = Complaint.objects.filter(
             municipality=user.municipality)
+
+        self.context['complaints'] = complaints
         self.context['c_user'] = user
+        self.context['stats'] = self.getComplaintStats(complaints)
         return render(request, self.template_name, context=self.context)
 
 
