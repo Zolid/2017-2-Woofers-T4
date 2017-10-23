@@ -21,10 +21,11 @@ class Complaint(models.Model):
     )
 
     COMPLAINT_STATUS = (
-        (1, "Enviado"),
-        (2, "En Gestión"),
-        (3, "Resuleta"),
-        (4, "Erronea"),
+        (1, "Reportada"),
+        (2, "Consolidada"),
+        (3, "Verificada"),
+        (4, "Cerrada"),
+        (5, "Desechada"),
     )
 
     GENDER_OPTIONS = (
