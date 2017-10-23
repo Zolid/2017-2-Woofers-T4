@@ -96,29 +96,31 @@
                     <h4 class="modal-title" id="myModalLabel">Perfil</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/user/" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="form-group">
-                            <label for="user_first_name">{{ user.first_name }}</label>
-                            <input type="email" class="form-control" id="user_first_name"
-                                   value="{{ user.first_name }}">
+                            <label for="user_first_name">Nombre</label>
+                            <input class="form-control" id="user_first_name"
+                                   value="{{ user.first_name }}" name="f_name">
                         </div>
                         <div class="form-group">
-                            <label for="user_last_name">{{ user.last_name }}</label>
-                            <input type="email" class="form-control" id="user_last_name"
-                                   value="{{ user.last_name }}">
+                            <label for="user_last_name">Apellido</label>
+                            <input class="form-control" id="user_last_name"
+                                   value="{{ user.last_name }}" name="l_name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Imagen de perfil</label>
                             <br>
                             <img src="{{ c_user.avatar.url }}" class="user-image" alt="User Image" width="150">
                             <br><br>
-                            <input type="file" id="exampleInputFile">
+                            <input type="file" id="exampleInputFile" name="avatar">
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
+
+                        <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+                    </form>
                 </div>
             </div>
         </div>

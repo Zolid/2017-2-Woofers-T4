@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -18,17 +18,16 @@ class IndexView(TemplateView):
         c_user = get_user_index(request.user)
         self.context['c_user'] = c_user
         animals = AnimalType.objects.all()
-        if c_user is None:
-            return render(request, 'index.html', {'animals': animals})
         self.context['animals'] = animals
-        return c_user.get_index(request, self.context)
+        if c_user is None:
+            return render(request, 'index.html', context=self.context)
+        return c_user.get_index(request, context=self.context)
 
 
 class LogInView(TemplateView):
     template_name = 'login.html'
     animals = AnimalType.objects.all()
     context = {'animals': animals}
-
 
     def get(self, request, **kwargs):
         return render(request, self.template_name, context=self.context)
@@ -38,7 +37,8 @@ class SignUpView(View):
     user_form = SignUpForm(initial={'username': 'dummy'}, prefix='user')
     avatar_form = AvatarForm(prefix='avatar')
     animals = AnimalType.objects.all()
-    context = {'user_form': user_form, 'avatar_form': avatar_form, 'animals': animals}
+    context = {'user_form': user_form,
+               'avatar_form': avatar_form, 'animals': animals}
     template_name = 'sign_up.html'
 
     def get(self, request, **kwargs):
@@ -50,17 +50,29 @@ class SignUpView(View):
         if user_form.is_valid() and avatar_form.is_valid():
             user_ = user_form.save()
             user_.refresh_from_db()
-            natural_user = NaturalUser.objects.create(user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
+            natural_user = NaturalUser.objects.create(
+                user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
             username = user_form.cleaned_data.get('email')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return natural_user.get_index(request)
-
+            return redirect('/')
         messages.error(request,
-                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.ru")
-
+                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarse")
         return render(request, self.template_name, context=self.context)
+
+
+class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
+    permission_required = 'naturalUser.natural_user_access'
+
+    def post(self, request, **kwargs):
+        c_user = get_user_index(request.user)
+        c_user.user.first_name = request.POST['f_name']
+        c_user.user.last_name = request.POST['l_name']
+        if 'avatar' in request.FILES:
+            c_user.avatar = request.FILES['avatar']
+        c_user.save()
+        return redirect('/')
 
 
 class OngInViewTemplate(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):

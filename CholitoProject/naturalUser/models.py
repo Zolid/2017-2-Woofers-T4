@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User, Permission
 from django.db import models
-from django.shortcuts import render, redirect
-
-from complaint.models import AnimalType
+from django.shortcuts import render
 
 
 class NaturalUser(models.Model):
@@ -20,7 +18,4 @@ class NaturalUser(models.Model):
         return "Natural user " + self.user.username
 
     def get_index(self, request, context=None):
-        if context:
-            return render(request, 'index.html', context)
-        user = NaturalUser.objects.get(user=request.user)
-        return redirect('user-index')
+        return render(request, 'index.html', context=context)

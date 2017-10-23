@@ -16,7 +16,6 @@ class Animal(models.Model):
     )
 
     name = models.TextField(max_length=100)
-    from_complaint = models.ForeignKey(Complaint, null=True)
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
     description = models.TextField(max_length=1000)
     animal_type = models.ForeignKey(AnimalType)
