@@ -52,4 +52,26 @@ class ComplaintRenderView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
         return render(request, self.template_name, context=self.context)
 
+class ComplaintActState(PermissionRequiredMixin, LoginRequiredMixin, View):
+    template_name = 'view_complaint.html'
+    permission_required = 'municipality.municipality_user_access'
+    context = {}
+
+
+    def post(self, request, **kwargs):
+        complaint = get_object_or_404(Complaint, pk=request.id-complaint)
+        complaint.status = request.status
+        complaint.save()
+
+        self.context['complaint'] = complaint
+
+        images = ComplaintImage.objects.filter(complaint=complaint)
+        self.context['images'] = images
+
+        return render(request, self.template_name, context=self.context)
+
+
+
+
+
 
