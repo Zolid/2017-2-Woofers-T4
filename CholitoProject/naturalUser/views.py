@@ -20,7 +20,7 @@ class IndexView(TemplateView):
         animals = AnimalType.objects.all()
         self.context['animals'] = animals
         if c_user is None:
-            return render(request, 'index.html')
+            return render(request, 'index.html', context=self.context)
         return c_user.get_index(request, context=self.context)
 
 
