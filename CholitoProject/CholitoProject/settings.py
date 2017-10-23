@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'municipality',
     'naturalUser',
     'ong',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'CholitoProject.urls'
@@ -134,3 +136,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Redirect for not logged users
 LOGIN_URL = '/login/'
+
+INTERNAL_IPS = ['127.0.0.1', ]

@@ -65,11 +65,12 @@
                     <h4 class="modal-title" id="myModalLabel">Perfil</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" action="/municipality/user/" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nombre</label>
                             <input type="email" class="form-control" id="exampleInputEmail1"
-                                   value="{{ c_user.municipality.name }}">
+                                   value="{{ c_user.municipality.name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Imagen de perfil</label>
@@ -78,14 +79,15 @@
                                  alt="User Image"
                                  width="150">
                             <br><br>
-                            <input type="file" id="exampleInputFile">
+                            <input type="file" id="exampleInputFile" name="avatar">
+                            <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Actualizar</button>
-                </div>
+                
             </div>
         </div>
     </div>
