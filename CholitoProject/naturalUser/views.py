@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -59,7 +58,7 @@ class SignUpView(View):
             login(request, user)
             return redirect('/')
         messages.error(request,
-                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.ru")
+                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarse")
         return render(request, self.template_name, context=self.context)
 
 
@@ -68,8 +67,10 @@ class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
 
     def post(self, request, **kwargs):
         c_user = get_user_index(request.user)
-        c_user.user.email = request.POST['email']
-        c_user.avatar = request.FILES['avatar']
+        c_user.user.first_name = request.POST['f_name']
+        c_user.user.last_name = request.POST['l_name']
+        if 'avatar' in request.FILES:
+            c_user.avatar = request.FILES['avatar']
         c_user.save()
         return redirect('/')
 
