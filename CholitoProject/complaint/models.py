@@ -21,10 +21,11 @@ class Complaint(models.Model):
     )
 
     COMPLAINT_STATUS = (
-        (1, "Enviado"),
-        (2, "En Gestión"),
-        (3, "Resuleta"),
-        (4, "Erronea"),
+        (1, 'Reportadas'),
+        (2, 'Consolidadas'),
+        (3, 'Verificadas'),
+        (4, 'Cerradas'),
+        (5, 'Desechadas'),
     )
 
     GENDER_OPTIONS = (
@@ -45,7 +46,7 @@ class Complaint(models.Model):
     status = models.SmallIntegerField(choices=COMPLAINT_STATUS)
     animal_type = models.ForeignKey(AnimalType)
     gender = models.SmallIntegerField(choices=GENDER_OPTIONS)
-    wounded = models.BooleanField(choices = WOUND_OPTIONS)
+    wounded = models.BooleanField(choices=WOUND_OPTIONS)
     color = models.TextField(max_length=50)
     municipality = models.ForeignKey(Municipality)
 
