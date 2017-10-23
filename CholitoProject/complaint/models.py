@@ -33,7 +33,7 @@ class Complaint(models.Model):
     )
 
     WOUND_OPTIONS = (
-        (True, "Si"),
+        (True, "Sí"),
         (False, "No"),
     )
 

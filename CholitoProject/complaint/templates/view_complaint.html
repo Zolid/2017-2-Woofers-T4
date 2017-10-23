@@ -1,28 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Denuncia #{{ complaint.pk }}</title>
-</head>
-<body>
+{% extends "Municipality/municipality-standard.html" %}
 
-<h2>Denuncia #{{ complaint.pk }}</h2>
-<h3>Estado: {{ complaint.status }}</h3>
+{% block title %}Denuncia #{{ complaint.pk }}{% endblock %}
 
-<p>Tipo de denuncia: {{ complaint.case }}</p>
-<p>Tipo de animal: {{ complaint.animal_type }}</p>
-<p>Color: {{ complaint.color }}</p>
-<p>Direccion: {{ complaint.directions }}</p>
-<p>Sexo: {{ complaint.gender }}</p>
-<p>¿Herido?:
-    {% if complaint.wounded == True %}
-        Si
-    {% else %}
-        No
+{% block content-header %}Denuncia #{{ complaint.pk }}{% endblock %}
+
+{% block content %}
+    <h3>Estado: {{ complaint.get_status_display }}</h3>
+
+    <p>Tipo de denuncia: {{ complaint.get_case_display }}</p>
+    <p>Tipo de animal: {{ complaint.animal_type }}</p>
+    <p>Color: {{ complaint.color }}</p>
+    <p>Direccion: {{ complaint.directions }}</p>
+    <p>Sexo: {{ complaint.get_gender_display }}</p>
+    <p>¿Herido?: {{ complaint.get_wounded_display }} </p>
+    <p>Comentario: {{ complaint.description }}</p>
+
+    <p>Y aqui mapa con las coordenadas</p>
+
+    {% if images %}
+    <!-- slider -->
+    <div class="row">
+        <div class="col-md-9" id="slider">
+            <!-- Top part of the slider -->
+            <div class="row">
+                <div class="col-md-3" id="carousel-bounding-box">
+                    <div id="myCarousel" class="carousel slide">
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+
+                            {% for image in images %}
+
+                                <div class="item"
+                                        {% if forloop.counter0 == 0 %}
+                                     id="slide0"
+                                        {% endif %}
+                                     data-slide-number="{{ forloop.counter0 }}">
+                                    <img class="img-rounded img-responsive" src="{{ image.image.url }}">
+                                </div>
+
+                            {% endfor %}
+
+                        </div><!--/carousel-inner-->
+                    </div><!--/carousel-->
+                    <ul class="carousel-controls-mini list-inline text-center">
+                        <li><a href="#myCarousel" data-slide="prev">‹</a></li>
+                        <li><a href="#myCarousel" data-slide="next">›</a></li>
+                    </ul><!--/carousel-controls-->
+                </div><!--/col-->
+                <div class="col-md-4" id="carousel-text"></div>
+
+            </div><!--/row-->
+        </div><!--/col-->
+    </div><!--/row slider-->
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#slide0").addClass("active");
+        });
+    </script>
+
     {% endif %}
-</p>
-<p>Comentario: {{ complaint.description }}</p>
 
-<p>Y aqui mapa con las coordenadas</p>
-</body>
-</html>
+{% endblock %}

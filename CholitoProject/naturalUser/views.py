@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import JsonResponse
@@ -26,15 +27,19 @@ class IndexView(TemplateView):
 
 class LogInView(TemplateView):
     template_name = 'login.html'
+    animals = AnimalType.objects.all()
+    context = {'animals': animals}
 
     def get(self, request, **kwargs):
-        return render(request, self.template_name)
+        return render(request, self.template_name, context=self.context)
 
 
 class SignUpView(View):
     user_form = SignUpForm(initial={'username': 'dummy'}, prefix='user')
     avatar_form = AvatarForm(prefix='avatar')
-    context = {'user_form': user_form, 'avatar_form': avatar_form}
+    animals = AnimalType.objects.all()
+    context = {'user_form': user_form,
+               'avatar_form': avatar_form, 'animals': animals}
     template_name = 'sign_up.html'
 
     def get(self, request, **kwargs):
@@ -52,7 +57,9 @@ class SignUpView(View):
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return natural_user.get_index()
+            return redirect('/')
+        messages.error(request,
+                       "Ha ocurrido un error en el registro. Debes ingresar todos los campos para registrarte.ru")
         return render(request, self.template_name, context=self.context)
 
 
@@ -70,9 +77,14 @@ class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
 class OngInViewTemplate(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
     permission_required = 'naturalUser.natural_user_access'
     template_name = 'usuario-in-ong.html'
+    context = {}
 
     def get(self, request, **kwargs):
-        return render(request, self.template_name)
+        c_user = get_user_index(request.user)
+        self.context['c_user'] = c_user
+        animals = AnimalType.objects.all()
+        self.context['animals'] = animals
+        return render(request, self.template_name, context=self.context)
 
 
 class OngOutViewTemplate(TemplateView):
