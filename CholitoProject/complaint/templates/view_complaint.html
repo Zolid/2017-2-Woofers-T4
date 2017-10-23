@@ -1,21 +1,36 @@
 {% extends "Municipality/municipality-standard.html" %}
+{% load static %}
 
 {% block title %}Denuncia #{{ complaint.pk }}{% endblock %}
 
-{% block content-header %}Denuncia #{{ complaint.pk }}{% endblock %}
+{% block content %}    
+    <h2 align="center">Denuncia #{{ complaint.pk }}</h2>
+    <table class="table table-responsive">
+    <tr>
+        <th>Tipo de Denuncia:</th>
+        <td>{{ complaint.get_case_display }}</td>
+        <th>Tipo de Animal:</th>
+        <td> {{ complaint.animal_type }}</td>
+        <th>Color:</th>
+        <td>{{ complaint.color }}</td>
+    </tr>
+    <tr>
+        <th>Direccion:</th>
+        <td>{{ complaint.directions }}</td>
+        <th>Sexo: </th>
+        <td>{{ complaint.get_gender_display }}</td>
+        <th>¿Herido?:</th>
+        <td>{{ complaint.get_wounded_display }}</td>
+    </tr>
+    <tr>
+        <th>Comentario:</th>
+        <td colspan="5">{{ complaint.description }}</td>
+    </tr>
+    </table>
+    <div height="200px">
+    <img src="{% static 'images/comp.png' %}" style="max-height: 350px;" class="img-fluid center-block">
+    </div>
 
-{% block content %}
-    <h3>Estado: {{ complaint.get_status_display }}</h3>
-
-    <p>Tipo de denuncia: {{ complaint.get_case_display }}</p>
-    <p>Tipo de animal: {{ complaint.animal_type }}</p>
-    <p>Color: {{ complaint.color }}</p>
-    <p>Direccion: {{ complaint.directions }}</p>
-    <p>Sexo: {{ complaint.get_gender_display }}</p>
-    <p>¿Herido?: {{ complaint.get_wounded_display }} </p>
-    <p>Comentario: {{ complaint.description }}</p>
-
-    <p>Y aqui mapa con las coordenadas</p>
 
     {% if images %}
     <!-- slider -->
@@ -53,6 +68,7 @@
         </div><!--/col-->
     </div><!--/row slider-->
 
+    
     <script>
         $(document).ready(function () {
             jQuery("#slide0").addClass("active");
@@ -60,5 +76,28 @@
     </script>
 
     {% endif %}
+
+    <div class="text-center">
+        <h3>Estado: <font color="#428bca"> {{ complaint.get_status_display }}</font></h3>
+
+        <form method="POST" enctype="multipart/form-data" action="{% url 'act-complaint' complaint.pk %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="id-complaint" id="id-complaint" value="{{complaint.pk}}"/>
+        <select class="btn btn-default btn-lg" id="status" name="status">
+          <option value="1">Reportada</option>
+          <option value="2">Consolidada</option>
+          <option value="3">Verificada</option>
+          <option value="4">Cerrada</option>
+          <option value="5">Desechada</option>
+        </select> 
+
+        <button type="submit" class="btn btn-primary btn-lg">Actualizar Estado</button>
+        </form>
+    
+
+    </div>
+
+
 
 {% endblock %}
