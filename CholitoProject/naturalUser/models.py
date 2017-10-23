@@ -18,4 +18,4 @@ class NaturalUser(models.Model):
         return "Natural user " + self.user.username
 
     def get_index(self, request, context=None):
-        return render(request, "index.html", context=context)
+        return render(request, 'index.html', context=context)

@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
@@ -17,10 +18,10 @@ class IndexView(TemplateView):
         c_user = get_user_index(request.user)
         self.context['c_user'] = c_user
         animals = AnimalType.objects.all()
-        if c_user is None:
-            return render(request, 'index.html', {'animals': animals})
         self.context['animals'] = animals
-        return c_user.get_index(request, self.context)
+        if c_user is None:
+            return render(request, 'index.html')
+        return c_user.get_index(request, context=self.context)
 
 
 class LogInView(TemplateView):
@@ -45,13 +46,25 @@ class SignUpView(View):
         if user_form.is_valid() and avatar_form.is_valid():
             user_ = user_form.save()
             user_.refresh_from_db()
-            natural_user = NaturalUser.objects.create(user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
+            natural_user = NaturalUser.objects.create(
+                user=user_, avatar=avatar_form.cleaned_data.get('avatar'))
             username = user_form.cleaned_data.get('email')
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return natural_user.get_index(request)
+            return natural_user.get_index()
         return render(request, self.template_name, context=self.context)
+
+
+class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
+    permission_required = 'naturalUser.natural_user_access'
+
+    def post(self, request, **kwargs):
+        c_user = get_user_index(request.user)
+        c_user.user.email = request.POST['email']
+        c_user.avatar = request.FILES['avatar']
+        c_user.save()
+        return redirect('/')
 
 
 class OngInViewTemplate(PermissionRequiredMixin, LoginRequiredMixin, TemplateView):
