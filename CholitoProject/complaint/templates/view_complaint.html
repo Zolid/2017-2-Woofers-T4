@@ -79,16 +79,17 @@
 
     <div class="text-center">
         <h3>Estado: <font color="#428bca"> {{ complaint.get_status_display }}</font></h3>
-        <form>
-         <select class="btn btn-default btn-lg" name="Estado">
-          <option value="volvo">Reportada</option>
-          <option value="saab">Consolidada</option>
-          <option value="fiat">Verificada</option>
-          <option value="audi">Cerrada</option>
-          <option value="audi">Desechada</option>
+
+        <form method="POST" enctype="multipart/form-data" action="#">
+        <select class="btn btn-default btn-lg" name="estado">
+          <option value="1">Reportada</option>
+          <option value="2">Consolidada</option>
+          <option value="3">Verificada</option>
+          <option value="4">Cerrada</option>
+          <option value="5">Desechada</option>
         </select> 
 
-        <button type="button" class="btn btn-primary btn-lg">Actualizar Estado</button>
+        <button type="submit" class="btn btn-primary btn-lg">Actualizar Estado</button>
         </form>
     
 
