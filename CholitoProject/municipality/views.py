@@ -13,7 +13,8 @@ class IndexView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
         user = get_user_index(request.user)
-        self.context['complaints'] = Complaint.objects.filter(municipality=user.municipality)
+        self.context['complaints'] = Complaint.objects.filter(
+            municipality=user.municipality)
         self.context['c_user'] = user
         return render(request, self.template_name, context=self.context)
 
@@ -34,7 +35,7 @@ class UserDetail(PermissionRequiredMixin, LoginRequiredMixin, View):
 
     def post(self, request, **kwargs):
         c_user = get_user_index(request.user)
-        c_user.avatar = request.FILES['avatar']
-        c_user.municipality.avatar = request.FILES['avatar']
-        c_user.municipality.save()
+        if 'avatar' in request.FILES:
+            c_user.municipality.avatar = request.FILES['avatar']
+            c_user.municipality.save()
         return redirect('/')
