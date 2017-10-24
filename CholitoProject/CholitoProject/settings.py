@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'animals',
     'complaint',
     'municipality',
-    'users'
+    'naturalUser',
+    'ong',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'CholitoProject.urls'
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'CholitoProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates/")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,8 +124,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static/"),
+]
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'statics/')
+STATIC_ROOT = '/var/www/example.com/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Redirect for not logged users
+LOGIN_URL = '/login/'
+
+INTERNAL_IPS = ['127.0.0.1', ]
